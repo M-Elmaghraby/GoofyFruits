@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="GameObject"/>
+<fullyQualifiedTypeName name="javax.swing.JFrame"/>
+<fullyQualifiedTypeName name="GoofyFruitsViewer"/>
+<fullyQualifiedTypeName name="ReadOnlyGameObjectIF"/>
+<fullyQualifiedTypeName name="GoofyFruitsEngine"/>
+<fullyQualifiedTypeName name="ArrayStack"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="java.awt.Component"/>
+<fullyQualifiedTypeName name="GamePadController"/>
+<fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+<fullyQualifiedTypeName name="GameObjectViewer"/>
+<fullyQualifiedTypeName name="RotatedIcon"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.awt.Container"/>
+<fullyQualifiedTypeName name="BasketViewer"/>
+<fullyQualifiedTypeName name="YellowApple"/>
+<fullyQualifiedTypeName name="Banana"/>
+<fullyQualifiedTypeName name="java.util.concurrent.DelayQueue"/>
+<fullyQualifiedTypeName name="java.util.Deque"/>
+<fullyQualifiedTypeName name="FallingItem"/>
+<fullyQualifiedTypeName name="FallingItemViewer"/>
+<fullyQualifiedTypeName name="DummyItem"/>
+<fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="FallingItemsPool"/>
+<fullyQualifiedTypeName name="Coconut"/>
+<fullyQualifiedTypeName name="RedApple"/>
+<fullyQualifiedTypeName name="GreenApple"/>
+<fullyQualifiedTypeName name="GamePadControllerOrgin"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,400 @@
+
+// GamePadViewer.java
+// Andrew Davison, October 2006, ad@fivedots.coe.psu.ac.th
+
+/* The game pad is represented by a canvas (HatPanel) which shows:
+       * 10 textfields (ButtonsPanel),
+         which represent the game pad's buttons;
+
+       * two JPanels for the (x,y) and (z,rz) analog sticks
+         (CompassPanel)
+
+       * a JPanel for the POV hat (another CompassPanel)
+
+       * a Rumble checkbox for switching rumbling on/off
+
+   Every DELAY ms the game pad is polled (using GamePadController),
+   and the CompassPanels and ButtonsPanel are updated.
+
+   The updates are carried out by an action handler which is executed 
+   in the event-dispatching thread. That means that the Swing updates
+   will be carried out correctly.
+*/
+
+import javax.swing.*;
+import javax.swing.border.Border;
+
+import java.awt.event.*;
+import java.awt.*;
+
+
+public class GamePadViewer extends JFrame 
+{
+  private static final int DELAY = 15;   // ms (polling interval)
+     // needs to be fast to catch fast button pressing!
+  int z = 8;
+  private GamePadController gpController;
+  private GamePadController gpController2;
+
+      // shows the two analog sticks and POV hat
+  private JCheckBox rumblerCheck;
+
+  Icon icon2 = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\goofy-left.png");
+  Icon icon = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\goofy-right.png");
+  Icon icon3 = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\background.png");
+  Icon bananaIcon = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\banana.png");
+  Icon appleIcon = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\redApple.png");
+  Icon gappleIcon = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\greenApple.png");
+  Icon yappleIcon = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\yellowApple.png");
+
+  Icon coconutIcon = new ImageIcon("D:\\College Work\\3rd Semester\\OOP\\FinalProject\\GameImages\\coconut.png");
+  
+  private Timer pollTimer;   // timer which triggers the polling
+  JLabel label ;
+  JLabel label2 ;
+  JLabel label3 ;
+  JLabel banana ;
+  JLabel apple ;
+  JLabel yapple ;
+
+  JLabel coconut ;
+  JLabel coconut2 ;
+
+  JLabel gapple ;
+
+
+  RotatedIcon ri ;
+  RotatedIcon ri2 ;
+  RotatedIcon ri3 ;
+  RotatedIcon ri4 ;
+  RotatedIcon ri5 ;
+
+  int y = 0 ;
+  int y2=500 ;
+
+  public GamePadViewer()
+  {
+	  
+    super("GamePad Viewer");
+    gpController = new GamePadController(1);
+    gpController2 = new GamePadController(2);
+
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
+    setUndecorated(true);
+    
+    makeGUI();
+
+    addWindowListener( new WindowAdapter() {
+      public void windowClosing(WindowEvent e)
+      { pollTimer.stop();   // stop the timer
+        System.exit(0);
+      }
+    });
+
+    pack();
+    setResizable(true);
+    setVisible(true);
+
+    startPolling(); 
+  } // end of GamePadViewer()
+
+
+  private void makeGUI()
+  /* GUI for button textfields, three compass panels, and
+     the rumbler checkbox */
+  {
+    Container c = getContentPane();
+    
+    label = new JLabel(icon);
+    label2 = new JLabel(icon2);
+    
+    label3 = new JLabel();
+    label3.setIcon(icon3); // NOI18N
+    label3.setBounds(0, 0, 1366, 768);
+    label.setBounds(0, 400, 150, 500);
+    label2.setBounds(500, 400, 150, 500);
+	ri = new RotatedIcon(bananaIcon, RotatedIcon.Rotate.ABOUT_CENTER);
+	  banana = new JLabel(ri);
+	  
+	  banana.setBounds(0, 0, 50	, 50);
+	  getContentPane().add(banana,0);
+	  
+	  ri2 = new RotatedIcon(appleIcon, RotatedIcon.Rotate.ABOUT_CENTER);
+	  apple = new JLabel(ri2);
+	  
+	  
+	  ri5 = new RotatedIcon(yappleIcon, RotatedIcon.Rotate.ABOUT_CENTER);
+	  yapple = new JLabel(ri5);
+	  
+	  
+	  apple.setBounds(0, 0, 50	, 50);
+	  getContentPane().add(apple,0);
+	
+	  
+	  yapple.setBounds(0, 0, 50	, 50);
+	  getContentPane().add(yapple,0);
+	  
+	  ri3 = new RotatedIcon(coconutIcon, RotatedIcon.Rotate.ABOUT_CENTER);
+	  coconut = new JLabel(ri3);
+	  
+	  coconut.setBounds(0, 0, 50	, 50);
+	  getContentPane().add(coconut,0);
+	  coconut2 = new JLabel(ri3);
+	  
+	  coconut2.setBounds(0, 0, 50	, 50);
+
+	  getContentPane().add(coconut2,0);
+	  
+	  ri4 = new RotatedIcon(gappleIcon, RotatedIcon.Rotate.ABOUT_CENTER);
+	  gapple = new JLabel(ri4);
+	  
+	  gapple.setBounds(0, 0, 50	, 50);
+	  getContentPane().add(gapple,0);
+	  
+	  
+	  
+	  
+    getContentPane().add(label);
+    getContentPane().add(label2);
+    getContentPane().add(label3);
+
+    
+    
+  }
+     // end of makeGUI()
+
+
+  
+  private void animate()
+  {
+	  
+	  
+	  ActionListener animator = new ActionListener() 
+	    {
+	      public void actionPerformed(ActionEvent e) 
+	      {
+	      } 
+	    };
+	  
+	    
+	    pollTimer = new Timer(DELAY, animator);
+	    pollTimer.start();
+	    
+	  
+  }
+  
+  private void startPolling()
+  /* Set up a timer which is activated every DELAY ms
+     and polls the game pad and updates the GUI. 
+     Safe since the action handler is executed in the 
+     event-dispatching thread. */
+  {
+    ActionListener pollPerformer = new ActionListener() 
+    {
+      public void actionPerformed(ActionEvent e) 
+      {
+        // System.out.println("polling...");
+        gpController.poll();
+       
+
+///////////////////////////////////////////////////////////////////////        
+        if(apple.getX()<170 )
+    	  {
+    		  ri2 = new RotatedIcon(appleIcon, ri2.getAngle()+3);
+  	    	  apple.setIcon(ri2);
+  	    	 
+    	  int y = (int)-Math.sqrt(40000 - ((apple.getX())*(apple.getX())))+200;	  
+    	  apple.setLocation(apple.getX()+3, y);
+    	  }
+    	  else if (apple.getY()<700)
+    	  {
+  	    	  apple.setLocation(apple.getX(), apple.getY()+3);
+  	    	  ri2 = new RotatedIcon(appleIcon, ri2.getAngle()+5);
+  	    	  apple.setIcon(ri2);
+    	  }
+    	  else
+    	  {
+    		  apple.setLocation(0,0);
+    	  }
+        
+///////////////////////////////////////////////////////////////////////        
+        if(yapple.getX()<400 )
+    	  {
+    		  ri5 = new RotatedIcon(yappleIcon, ri5.getAngle()+3);
+  	    	  yapple.setIcon(ri5);
+  	    	 
+    	  int y = (int)-Math.sqrt(202500 - ((yapple.getX())*(yapple.getX())))+450;	  
+    	  yapple.setLocation(yapple.getX()+3, y);
+    	  }
+    	  else if (yapple.getY()<700)
+    	  {
+  	    	  yapple.setLocation(yapple.getX(), yapple.getY()+3);
+  	    	  ri5 = new RotatedIcon(yappleIcon, ri5.getAngle()+5);
+  	    	  yapple.setIcon(ri5);
+    	  }
+    	  else
+    	  {
+    		  yapple.setLocation(0,0);
+    	  }
+        
+        ///////////////////////////////////////////////////////////////////
+        if(gapple.getX()<30 )
+  	  {
+  		  ri4 = new RotatedIcon(gappleIcon, ri4.getAngle()+3);
+	    	  gapple.setIcon(ri4);
+	    	 
+  	  int y = (int)-Math.sqrt(10000 - ((gapple.getX())*(gapple.getX())))+100;	  
+  	  gapple.setLocation(gapple.getX()+3, y);
+  	  }
+  	  else if (gapple.getY()<700)
+  	  {
+	    	  gapple.setLocation(gapple.getX(), gapple.getY()+2);
+	    	  ri4 = new RotatedIcon(gappleIcon, ri4.getAngle()+5);
+	    	  gapple.setIcon(ri4);
+  	  }
+  	else
+	  {
+		  gapple.setLocation(0,0);
+	  }
+        
+        
+        //////////////////////////////////////////////////////////////////////
+        
+  	  if(banana.getX()<350 )
+  	  {
+  		  ri = new RotatedIcon(bananaIcon, ri.getAngle()+3);
+	    	  banana.setIcon(ri);
+	    	 
+  	  int y = (int)-Math.sqrt(360000 - ((banana.getX())*(banana.getX())))+600;	  
+  	  banana.setLocation(banana.getX()+3, y);
+  	  }
+  	  else if(banana.getY()<700)
+  	  {
+	    	  banana.setLocation(banana.getX(), banana.getY()+3);
+	    	  ri = new RotatedIcon(bananaIcon, ri.getAngle()+5);
+	    	  banana.setIcon(ri);
+  	  }  
+  	else
+	  {
+		  banana.setLocation(0,0);
+	  }
+  	  
+  	  ///////////////////////////////////////////////////////////////////////
+  	  
+  	if(coconut.getX()<500 )
+	  {
+		  ri3 = new RotatedIcon(coconutIcon, ri3.getAngle()+3);
+	    	  coconut.setIcon(ri3);
+	    	 
+	  int y = (int)-Math.sqrt(1000000 - ((coconut.getX())*(coconut.getX())))+1000;	  
+	  coconut.setLocation(coconut.getX()+3, y);
+	  }
+	  else if(coconut.getY()<700)
+	  {
+	    	  coconut.setLocation(coconut.getX(), coconut.getY()+3);
+	    	  ri3 = new RotatedIcon(coconutIcon, ri3.getAngle()+5);
+	    	  coconut.setIcon(ri3);
+	  }  
+	  else
+	  {
+		  coconut.setLocation(0,0);
+	  }
+  	
+  	////////////////////////////////////////////////////////////////////////////////
+  	
+  	
+  	if(coconut2.getX()<220 )
+	  {
+		  ri3 = new RotatedIcon(coconutIcon, ri3.getAngle()+3);
+	    	  coconut2.setIcon(ri3);
+	    	 
+	  int y = (int)-Math.sqrt(250000 - ((coconut2.getX())*(coconut2.getX())))+500;	  
+	  coconut2.setLocation(coconut2.getX()+3, y);
+	  }
+	  else if(coconut.getY()<700)
+	  {
+	    	  coconut2.setLocation(coconut2.getX(), coconut2.getY()+3);
+	    	  ri3 = new RotatedIcon(coconutIcon, ri3.getAngle()+5);
+	    	  coconut2.setIcon(ri3);
+	  }  
+	  else
+	  {
+		  coconut2.setLocation(0,0);
+	  }
+	
+	////////////////////////////////////////////////////////////////////////////////
+	
+  	
+  	
+  	if(coconut.getX()<500 )
+	  {
+		  ri3 = new RotatedIcon(coconutIcon, ri3.getAngle()+3);
+	    	  coconut.setIcon(ri3);
+	    	 
+	  int y = (int)-Math.sqrt(1000000 - ((coconut.getX())*(coconut.getX())))+1000;	  
+	  coconut.setLocation(coconut.getX()+3, y);
+	  }
+	  else if(coconut.getY()<700)
+	  {
+	    	  coconut.setLocation(coconut.getX(), coconut.getY()+3);
+	    	  ri3 = new RotatedIcon(coconutIcon, ri3.getAngle()+5);
+	    	  coconut.setIcon(ri3);
+	  }  
+	  else
+	  {
+		  coconut.setLocation(0,0);
+	  }
+	
+	////////////////////////////////////////////////////////////////////////////////
+	
+  	
+        int x = gpController.getXYStickDir();
+        if(x == GamePadController2.WEST)
+        {
+        label.setIcon(icon);
+        y-=5;
+        label.setLocation(y, 400);
+
+        }
+        else if(x == GamePadController2.EAST)
+        {
+        	label.setIcon(icon2);
+        	y+=5;
+            label.setLocation(y, 400);
+
+      }
+        gpController2.poll();
+
+        
+        int x2 = gpController2.getXYStickDir();
+        if(x2 == GamePadController2.WEST)
+        {
+        label2.setIcon(icon);
+        y2-=5;
+        label2.setLocation(y2, 400);
+
+        }
+        else if(x2 == GamePadController2.EAST)
+        {
+        	label2.setIcon(icon2);
+        	y2+=5;
+            label2.setLocation(y2, 400);
+
+      }
+    }
+    };
+
+    pollTimer = new Timer(DELAY, pollPerformer);
+    pollTimer.start();
+  }  // end of startPolling()
+
+
+  // -----------------------------------------------------
+
+  public static void main(String args[])
+  {  new GamePadViewer();
+  }
+
+}  // end of GamePadViewer class
+

@@ -1,0 +1,6 @@
+#Mon Dec 26 02:18:04 EET 2011
+org.eclipse.debug.ui.DebugView.org.eclipse.cdt.debug.ui.cDebug.show_full_paths.isSet=true
+eclipse.preferences.version=1
+org.eclipse.debug.ui.DebugView.org.eclipse.cdt.debug.ui.cDebug.show_full_paths=true
+org.eclipse.debug.ui.BreakpointView.org.eclipse.cdt.debug.ui.cDebug.show_full_paths=true
+org.eclipse.debug.ui.BreakpointView.org.eclipse.cdt.debug.ui.cDebug.show_full_paths.isSet=true

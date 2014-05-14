@@ -1,0 +1,20 @@
+content_assist_disabled_computers=org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="javax.swing.SwingConstants"><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="javax.accessibility.Accessible"><rhs name\="GoofyFruitsViewer"/><rhs name\="javax.swing.ImageIcon"/><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="javax.swing.JComponent"><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="javax.swing.TransferHandler$HasGetTransferHandler"><rhs name\="GoofyFruitsViewer"/><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="java.awt.Container"><rhs name\="GoofyFruitsViewer"/><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="java.awt.Component"><rhs name\="GoofyFruitsViewer"/><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="java.awt.image.ImageObserver"><rhs name\="GoofyFruitsViewer"/><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="java.awt.MenuContainer"><rhs name\="GoofyFruitsViewer"/><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="javax.swing.JLabel"><rhs name\="javax.swing.JLabel"/></lhs><lhs name\="javax.swing.JFrame"><rhs name\="GoofyFruitsViewer"/></lhs><lhs name\="javax.swing.WindowConstants"><rhs name\="GoofyFruitsViewer"/></lhs><lhs name\="javax.swing.RootPaneContainer"><rhs name\="GoofyFruitsViewer"/></lhs><lhs name\="java.awt.Frame"><rhs name\="GoofyFruitsViewer"/></lhs><lhs name\="java.awt.Window"><rhs name\="GoofyFruitsViewer"/></lhs><lhs name\="GoofyFruitsViewer"><rhs name\="GoofyFruitsViewer"/></lhs><lhs name\="GamePadController"><rhs name\="GamePadController"/></lhs><lhs name\="GoofyFruitsEngine"><rhs name\="GoofyFruitsEngine"/></lhs><lhs name\="javax.swing.Icon"><rhs name\="javax.swing.ImageIcon"/><rhs name\="RotatedIcon"/></lhs><lhs name\="javax.swing.ImageIcon"><rhs name\="javax.swing.ImageIcon"/></lhs><lhs name\="Stack"><rhs name\="ArrayStack"/></lhs><lhs name\="ArrayStack"><rhs name\="ArrayStack"/></lhs><lhs name\="ReadOnlyGameObjectIF"><rhs name\="YellowApple"/><rhs name\="Banana"/><rhs name\="FallingItem"/><rhs name\="DummyItem"/><rhs name\="Coconut"/><rhs name\="RedApple"/><rhs name\="GreenApple"/></lhs><lhs name\="GameObject"><rhs name\="YellowApple"/><rhs name\="Banana"/><rhs name\="FallingItem"/><rhs name\="DummyItem"/><rhs name\="Coconut"/><rhs name\="RedApple"/><rhs name\="GreenApple"/></lhs><lhs name\="FallingItem"><rhs name\="YellowApple"/><rhs name\="Banana"/><rhs name\="FallingItem"/><rhs name\="DummyItem"/><rhs name\="Coconut"/><rhs name\="RedApple"/><rhs name\="GreenApple"/></lhs><lhs name\="RotatedIcon"><rhs name\="RotatedIcon"/></lhs><lhs name\="GameObjectViewer"><rhs name\="GameObjectViewer"/></lhs><lhs name\="FallingItemViewer"><rhs name\="FallingItemViewer"/></lhs><lhs name\="BasketViewer"><rhs name\="BasketViewer"/></lhs><lhs name\="DummyItem"><rhs name\="DummyItem"/></lhs><lhs name\="GamePadControllerOrgin"><rhs name\="GamePadControllerOrgin"/></lhs></history>
+content_assist_number_of_computers=21
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
+org.eclipse.jface.textfont=1|Consolas|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas;
+proposalOrderMigrated=true
+spelling_locale_initialized=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true
